@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mahmoud — Backend Developer</title>
+    <style>
+        :root {
+            --primary: #2196f3;
+            --bg: #0d1117;
+            --card-bg: #161b22;
+            --text: #e6edf3;
+            --muted: #8b949e;
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 40px 10%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        header img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        section {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s;
+        }
+
+        section:hover {
+            transform: translateY(-4px);
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        ul {
+            list-style: none;
+            margin-left: 10px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <!-- 🖼️ Replace src with your photo -->
+        <img src="mahmoud.jpg" alt="Your Photo">
+        <h1>Mahmoud Sharabati</h1>
+        <p>Backend Developer | .NET | Postgresql | API Design</p>
+    </header>
+
+    <section id="about">
+        <h2>About Me</h2>
+        <p>
+            <!-- ✍️ Write about yourself here -->
+            Mid-lever back-end developer with over 3 years in back-end development, specializing in .NET Core and
+            building robust APIs with clean architecture with DDD . Passionate about creating efficient, scalable
+            solutions and continuously learning new technologies to enhance my skill set.
+        </p>
+    </section>
+
+    <section id="experience">
+        <h2>Experience</h2>
+        <ul>
+            <!-- 🏢 Add your work experiences -->
+            <li><strong>Elkood</strong> — Backend Developer (2022 - 2024)</li>
+            <ul>
+                <li>Building back-end application that satisfies customer requirements.</li>
+                <li>Designing and implementing RESTful APIs using .NET Core.</li>
+                <li>Integration application with Third-party Apis like stripe, telegram and google Apis</li>
+                <li>Improve libraries that used in projects</li>
+                <li>Improve code quality and decrease bugs for a faster project delivery</li>
+                <li>Mentoring interns for a more cohesive development team</li>
+            </ul>
+        </ul>
+    </section>
+
+    <section id="skills">
+        <h2>Skills</h2>
+        <ul>
+            <!-- 🧠 Add your skills -->
+            <li>.NET Core / C#</li>
+            <li>Entity Framework Core</li>
+            <li>PostgreSQL</li>
+            <li>RESTful APIs</li>
+            <li>Nginx / Linux</li>
+            <li>problem solving</li>
+            <li>Singlr</li>
+
+        </ul>
+    </section>
+
+    <section id="companies">
+        <h2>Companies</h2>
+        <ul>
+            <!-- 🏢 Add companies you worked with -->
+            <li>Elkood</li>
+        </ul>
+    </section>
+
+    <section id="projects">
+        <h2>Projects</h2>
+        <ul>
+            <li><a href="https://gitlab.com/mahmoudsh792/template.git" target="_blank">Template</a>
+                Developed a scalable and maintainable software project using Clean Architecture and Domain-Driven Design
+                (DDD) principles. Implemented a clear separation of concerns across domain, application, infrastructure,
+                and UI
+                layers, ensuring high testability and adaptability to future changes.
+            </li>
+            <li><a href="http://dashboardstockwise.runasp.net/" target="_blank">Stockwise Dashboard</a>
+                Dashboard for WMS To manage product categories admins......
+                Using Blazor, Asp.NetCore, Postgresql, CleanArchitecture and DDD</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>VOULNTEERING</h2>
+        <ul>
+            <li><strong>BlueBitsTeam</strong>(2020 - 2022)
+                <ul>
+                    <li>Digitized university lectures by transforming professor's notes into structured digital material
+                    </li>
+                </ul>
+            </li>
+            <li><strong>Sanad</strong>(March 2025 - May 2025)
+                <ul>
+                    <li>Delivered a hands-on training course on .NetCore MVC at Al-Shahba Private University.
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+
+    <section id="contact">
+        <h2>Contact</h2>
+        <p>Email: <a href="mahmoud.sharabati.dev@gmail.com">mahmoud.sharabati.dev@gmail.com</a></p>
+        <p>GitHub: <a href="https://github.com/00mahmoud00" target="_blank">https://github.com/00mahmoud00</a></p>
+        <p>LinkedIn: <a href="https://www.linkedin.com/in/mahmoud-sharabati-0226b223a"
+                target="_blank">https://www.linkedin.com/in/mahmoud-sharabati-0226b223a</a></p>
+    </section>
+    <footer>
+        <p>© <span id="year"></span> Mahmoud — All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Update footer year automatically
+        document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+</body>
+
+</html>
