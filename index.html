@@ -1,238 +1,694 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mahmoud — Backend Developer</title>
-    <style>
-        :root {
-            --primary: #2196f3;
-            --bg: #0d1117;
-            --card-bg: #161b22;
-            --text: #e6edf3;
-            --muted: #8b949e;
-            --radius: 12px;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mahmoud Sharabati — .NET Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #16161f;
+    --border: #1e1e2e;
+    --accent: #7c6af7;
+    --accent2: #a78bfa;
+    --accent3: #38bdf8;
+    --text: #e2e0f0;
+    --muted: #6b6985;
+    --dot: #2a2a3e;
+  }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "Poppins", sans-serif;
-        }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            display: flex;
-            justify-content: center;
-            padding: 40px 20px;
-        }
+  html { scroll-behavior: smooth; }
 
-        .container {
-            width: 100%;
-            max-width: 900px;
-            border-radius: var(--radius);
-            padding: 40px;
-            animation: fadeIn 1s ease-in-out;
-        }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
 
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
+  /* ── Noise overlay ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
 
-        header img {
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--primary);
-            /* margin-bottom: 5px; */
-        }
+  /* ── Grid lines ── */
+  .grid-bg {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--dot) 1px, transparent 1px),
+      linear-gradient(90deg, var(--dot) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: 0;
+  }
 
-        h1 {
-            font-size: 2rem;
-            color: var(--primary);
-        }
+  /* ── Glow orbs ── */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(100px);
+    pointer-events: none;
+    z-index: 0;
+    animation: drift 20s ease-in-out infinite alternate;
+  }
+  .orb-1 { width: 500px; height: 500px; background: rgba(124,106,247,0.08); top: -100px; left: -100px; animation-delay: 0s; }
+  .orb-2 { width: 400px; height: 400px; background: rgba(56,189,248,0.06); bottom: -100px; right: -100px; animation-delay: -10s; }
 
-        section {
-            background-color: #1b2129;
-            border-radius: var(--radius);
-            padding: 25px;
-            margin-bottom: 25px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
+  @keyframes drift {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(60px, 40px) scale(1.1); }
+  }
 
-        section:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-        }
+  /* ── Layout ── */
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 32px 100px;
+  }
 
-        h2 {
-            border-bottom: 2px solid var(--primary);
-            padding-bottom: 8px;
-            margin-bottom: 15px;
-            font-size: 1.3rem;
-        }
+  /* ── Header ── */
+  .header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: start;
+    margin-bottom: 56px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: rise 0.8s cubic-bezier(0.22,1,0.36,1) 0.1s forwards;
+  }
 
-        ul {
-            list-style: none;
-            margin-left: 10px;
-        }
+  .name {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(36px, 6vw, 62px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -2px;
+    background: linear-gradient(135deg, #fff 30%, var(--accent2) 70%, var(--accent3) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
 
-        li {
-            margin-bottom: 10px;
-        }
+  .title-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 14px;
+    background: rgba(124,106,247,0.12);
+    border: 1px solid rgba(124,106,247,0.25);
+    border-radius: 100px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--accent2);
+    letter-spacing: 0.5px;
+    margin-bottom: 18px;
+  }
+  .title-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
 
-        a {
-            color: var(--primary);
-            text-decoration: none;
-        }
+  .contact-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .contact-row a {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .contact-row a:hover { color: var(--accent2); }
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
 
-        a:hover {
-            text-decoration: underline;
-        }
+  .summary-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 12px;
+    padding: 20px 24px;
+    font-size: 14px;
+    color: #a09ec0;
+    line-height: 1.8;
+    font-weight: 300;
+    margin-bottom: 56px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: rise 0.8s cubic-bezier(0.22,1,0.36,1) 0.3s forwards;
+  }
 
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            color: var(--muted);
-            font-size: 0.9rem;
-        }
+  @keyframes rise {
+    to { opacity: 1; transform: translateY(0); }
+  }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
+  /* ── Section ── */
+  .section {
+    margin-bottom: 52px;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .section.visible { opacity: 1; transform: translateY(0); }
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--border), transparent);
+  }
 
-        /* 📱 Responsive Design */
-        @media (max-width: 768px) {
-            .container {
-                padding: 25px;
-            }
+  /* ── Job card ── */
+  .job {
+    position: relative;
+    padding: 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin-bottom: 16px;
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    overflow: hidden;
+  }
+  .job::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(124,106,247,0.04) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .job:hover { border-color: rgba(124,106,247,0.4); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(124,106,247,0.08); }
+  .job:hover::before { opacity: 1; }
 
-            h1 {
-                font-size: 1.6rem;
-            }
+  .job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .job-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    color: #fff;
+  }
+  .job-company {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--accent3);
+    margin-top: 3px;
+  }
+  .job-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+  }
+  .job-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .job-type {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 100px;
+    background: rgba(56,189,248,0.1);
+    border: 1px solid rgba(56,189,248,0.2);
+    color: var(--accent3);
+  }
 
-            header img {
-                width: 110px;
-                height: 110px;
-            }
+  .job ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .job ul li {
+    padding-left: 20px;
+    position: relative;
+    font-size: 13.5px;
+    color: #9593b0;
+    line-height: 1.65;
+  }
+  .job ul li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 10px;
+    top: 4px;
+  }
+  .job ul li strong {
+    color: #c8c5e0;
+    font-weight: 500;
+  }
 
-            h2 {
-                font-size: 1.1rem;
-            }
-        }
-    </style>
+  /* ── Project cards ── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 16px;
+  }
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--accent), var(--accent3));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.22,1,0.36,1);
+  }
+  .project-card:hover { border-color: rgba(124,106,247,0.3); transform: translateY(-3px); box-shadow: 0 16px 40px rgba(0,0,0,0.3); }
+  .project-card:hover::after { transform: scaleX(1); }
+
+  .project-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 10px;
+  }
+  .project-desc {
+    font-size: 13px;
+    color: #8a88a8;
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 3px 10px;
+    border-radius: 100px;
+    background: rgba(124,106,247,0.1);
+    border: 1px solid rgba(124,106,247,0.2);
+    color: var(--accent2);
+  }
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent3);
+    text-decoration: none;
+    transition: gap 0.2s, color 0.2s;
+  }
+  .project-link:hover { gap: 10px; color: #fff; }
+
+  /* ── Skills ── */
+  .skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .skill-chip {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    padding: 8px 16px;
+    border-radius: 100px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: #b0aed0;
+    transition: all 0.25s;
+    cursor: default;
+  }
+  .skill-chip:hover {
+    background: rgba(124,106,247,0.12);
+    border-color: rgba(124,106,247,0.35);
+    color: var(--accent2);
+    transform: translateY(-2px);
+  }
+
+  /* ── Education & Volunteering ── */
+  .info-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 24px;
+    margin-bottom: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+    transition: border-color 0.3s;
+  }
+  .info-card:hover { border-color: rgba(124,106,247,0.3); }
+  .info-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; color: #fff; margin-bottom: 4px; }
+  .info-sub { font-size: 13px; color: #7a78a0; }
+  .info-meta { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-align: right; }
+
+  /* ── Volunteer ── */
+  .vol-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 24px;
+    margin-bottom: 14px;
+    transition: border-color 0.3s;
+  }
+  .vol-card:hover { border-color: rgba(124,106,247,0.3); }
+  .vol-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .vol-org { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; color: #fff; }
+  .vol-date { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+  .vol-desc { font-size: 13.5px; color: #8a88a8; line-height: 1.7; }
+
+  /* ── Divider ── */
+  hr { border: none; border-top: 1px solid var(--border); margin: 8px 0 24px; }
+
+  /* ── Scroll indicator ── */
+  .scroll-line {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--accent), var(--accent3));
+    z-index: 9998;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform 0.1s;
+  }
+
+  @media (max-width: 600px) {
+    .header { grid-template-columns: 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .job-header { flex-direction: column; }
+    .job-meta { align-items: flex-start; }
+  }
+</style>
 </head>
-
 <body>
-    <div class="container">
-        <header>
-            <img src="mahmoud.jpg" alt="Your Photo">
-            <h1>Mahmoud Sharabati</h1>
-            <p>Backend Developer | .NET | PostgreSQL | API Design</p>
-        </header>
 
-        <section id="about">
-            <h2>About Me</h2>
-            <p>
-                Mid-level back-end developer with over 3 years in back-end development,
-                specializing in .NET Core and building robust APIs with clean architecture and DDD.
-                Passionate about creating efficient, scalable solutions and continuously learning new technologies.
-            </p>
-        </section>
+<div class="grid-bg"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="scroll-line" id="scrollLine"></div>
 
-        <section id="experience">
-            <h2>Experience</h2>
-            <ul>
-                <li><strong>Elkood</strong> — Backend Developer (2022 - 2024)</li>
-                <ul>
-                    <li>Built back-end applications satisfying customer requirements.</li>
-                    <li>Designed and implemented RESTful APIs using .NET Core.</li>
-                    <li>Integrated third-party APIs like Stripe, Telegram, and Google.</li>
-                    <li>Improved shared libraries and code quality for faster delivery.</li>
-                    <li>Mentored interns to create a stronger development team.</li>
-                </ul>
-            </ul>
-        </section>
+<div class="container">
 
-        <section id="skills">
-            <h2>Skills</h2>
-            <ul>
-                <li>.NET Core / C#</li>
-                <li>Entity Framework Core</li>
-                <li>PostgreSQL</li>
-                <li>RESTful APIs</li>
-                <li>Nginx / Linux</li>
-                <li>Problem Solving</li>
-                <li>SignalR</li>
-            </ul>
-        </section>
+  <!-- HEADER -->
+  <header class="header">
+  <img src="mahmoud.jpg" alt="Mahmoud Sharabati" style="
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(124,106,247,0.5);
+      box-shadow: 0 0 30px rgba(124,106,247,0.2);
+      justify-self: end;
+      align-self: start;
+    ">
+   
+    <div>
+      <div class="name">Mahmoud<br>Sharabati</div>
+      <div class="title-badge">Mid-level .NET Core Developer</div>
+      <div class="contact-row">
+        <span class="contact-item">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8 19.79 19.79 0 01.22 1.18 2 2 0 012.22 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.18 6.18l1.08-1.08a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          +963 985 839 618
+        </span>
+        <a class="contact-item" href="mailto:mahmoud.sharabati.dev@gmail.com">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          mahmoud.sharabati.dev@gmail.com
+        </a>
+        <a class="contact-item" href="https://linkedin.com/in/mahmoud-sharabati-0226b223a" target="_blank">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+  </header>
 
-        <section id="projects">
-            <h2>Projects</h2>
-            <ul>
-                <li>
-                    <a href="https://gitlab.com/mahmoudsh792/template.git" target="_blank">Template</a> — (DDD)
-                    principles. Implemented a clear separation of concerns across domain, application, infrastructure,
-                    and UI
-                    layers, ensuring high testability and adaptability to future changes.
-                </li>
-                <li>
-                    <a href="http://dashboardstockwise.runasp.net/" target="_blank">Stockwise Dashboard</a> —
-                    Dashboard for WMS To manage product categories admins......
-                    Using Blazor, Asp.NetCore, Postgresql, CleanArchitecture and DDD
+  <!-- SUMMARY -->
+  <div class="summary-box">
+    Strategic and detail-oriented .NET Developer with over <strong style="color:#c8c5e0">4 years of experience</strong> specializing in the .NET ecosystem. Expert in architecting scalable back-end systems using <strong style="color:#c8c5e0">Clean Architecture</strong> and <strong style="color:#c8c5e0">Domain-Driven Design (DDD)</strong>. Proficient in developing high-performance, interactive user interfaces using <strong style="color:#c8c5e0">Blazor (Server-Side & WebAssembly)</strong> and MudBlazor. Proven track record of streamlining project delivery through custom library development, seamless Third-party API integrations, and a commitment to high-quality, maintainable code.
+  </div>
 
-                </li>
-            </ul>
-        </section>
+  <!-- WORK EXPERIENCE -->
+  <section class="section">
+    <div class="section-label">Work Experience</div>
 
-        <section id="volunteering">
-            <h2>Volunteering</h2>
-            <ul>
-                <li><strong>BlueBits Team</strong> (2020 - 2022)
-                    <ul>
-                        <li>Digitized university lectures by transforming professor notes into structured digital
-                            material.</li>
-                    </ul>
-                </li>
-                <li><strong>Sanad</strong> (March 2025 - May 2025)
-                    <ul>
-                        <li>Delivered a hands-on training course on .NET Core MVC at Al-Shahba Private University.</li>
-                    </ul>
-                </li>
-            </ul>
-        </section>
-
-        <section id="contact">
-            <h2>Contact</h2>
-            <p>Email: <a href="mailto:mahmoud.sharabati.dev@gmail.com">mahmoud.sharabati.dev@gmail.com</a></p>
-            <p>GitHub: <a href="https://github.com/00mahmoud00" target="_blank">github.com/00mahmoud00</a></p>
-            <p>LinkedIn: <a href="https://www.linkedin.com/in/mahmoud-sharabati-0226b223a"
-                    target="_blank">linkedin.com/in/mahmoud-sharabati-0226b223a</a></p>
-        </section>
-
-        <footer>
-            <p>© <span id="year"></span> Mahmoud — All rights reserved.</p>
-        </footer>
+    <div class="job">
+      <div class="job-header">
+        <div>
+          <div class="job-title">.NET Developer</div>
+          <div class="job-company">— Aleppo, Syria</div>
+        </div>
+        <div class="job-meta">
+          <span class="job-date">Nov 2025 — Present</span>
+          <span class="job-type">Part-time</span>
+        </div>
+      </div>
+      <ul>
+        <li><strong>Feature Development:</strong> Designed and implemented responsive administrative dashboards using Blazor and .NET Core, focusing on real-time data visualization and efficient management tools.</li>
+        <li><strong>Production Support:</strong> Managed the application in a live production environment, performing regular server health checks and technical troubleshooting to ensure 99.9% uptime.</li>
+        <li><strong>Technical Support & Optimization:</strong> Acted as the primary point of contact for technical issues, identifying root causes in production logs and deploying hotfixes to improve system stability.</li>
+      </ul>
     </div>
 
-    <script>
-        document.getElementById("year").textContent = new Date().getFullYear();
-    </script>
-</body>
+    <div class="job">
+      <div class="job-header">
+        <div>
+          <div class="job-title">.NET Backend Developer</div>
+          <div class="job-company">Evolvo • Aleppo, Syria</div>
+        </div>
+        <div class="job-meta">
+          <span class="job-date">May 2022 — Apr 2024</span>
+          <span class="job-type">Full-time</span>
+        </div>
+      </div>
+      <ul>
+        <li><strong>System Architecture:</strong> Architected and deployed scalable back-end solutions using .NET Core/6+, translating complex business requirements into high-performance web applications.</li>
+        <li><strong>API Integration & Payment Systems:</strong> Streamlined business operations by integrating third-party services including Stripe, Google APIs, and Telegram for automated notification systems.</li>
+        <li><strong>Infrastructure & Tooling:</strong> Developed and maintained shared Internal Libraries, reducing boilerplate code across multiple projects and accelerating the development lifecycle.</li>
+        <li><strong>Code Quality & Optimization:</strong> Refactored legacy codebases to implement modern design patterns, resulting in measurable decreases in production bugs and faster project delivery.</li>
+        <li><strong>Mentorship & Leadership:</strong> Mentored engineering interns through code reviews and technical workshops to foster a high-performing development team.</li>
+        <li><strong>Technical Problem Solving:</strong> Engineered custom solutions for diverse business sectors, ensuring high availability and alignment with industry best practices.</li>
+      </ul>
+    </div>
 
+    <div class="job">
+      <div class="job-header">
+        <div>
+          <div class="job-title">.NET Developer</div>
+          <div class="job-company">Elkood • Aleppo, Syria</div>
+        </div>
+        <div class="job-meta">
+          <span class="job-date">— —</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="section">
+    <div class="section-label">Projects</div>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-name">Clean Architecture Template</div>
+        <div class="project-desc">
+          A scalable and maintainable software project template built on Clean Architecture and Domain-Driven Design (DDD) principles. Implements clear separation of concerns across domain, application, infrastructure, and UI layers — ensuring high testability and adaptability.
+        </div>
+        <div class="project-tags">
+          <span class="tag">Clean Architecture</span>
+          <span class="tag">DDD</span>
+          <span class="tag">.NET Core</span>
+        </div>
+        <a class="project-link" href="#" target="_blank">
+          View Repository
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+
+      <div class="project-card">
+        <div class="project-name">Stockwise Dashboard</div>
+        <div class="project-desc">
+          A Warehouse Management System (WMS) dashboard for managing product categories, stock levels, and admin workflows. Built with a focus on performance and real-time data display.
+        </div>
+        <div class="project-tags">
+          <span class="tag">Blazor</span>
+          <span class="tag">ASP.NET Core</span>
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">Clean Architecture</span>
+          <span class="tag">DDD</span>
+        </div>
+        <a class="project-link" href="#" target="_blank">
+          View Dashboard
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="section">
+    <div class="section-label">Education</div>
+    <div class="info-card">
+      <div>
+        <div class="info-title">B.Sc. in IT Engineering</div>
+        <div class="info-sub">Aleppo University • Aleppo, Syria</div>
+      </div>
+      <div class="info-meta">Sep 2020 — Nov 2026</div>
+    </div>
+  </section>
+
+  <!-- VOLUNTEERING -->
+  <section class="section">
+    <div class="section-label">Volunteering & Leadership</div>
+
+    <div class="vol-card">
+      <div class="vol-header">
+        <div class="vol-org">Sanad</div>
+        <div class="vol-date">Mar 2025 — May 2025 • Aleppo</div>
+      </div>
+      <div class="vol-desc">Delivered a hands-on training course on <strong style="color:#c8c5e0">.NET Core MVC</strong> at Al-Shahba Private University.</div>
+    </div>
+
+    <div class="vol-card">
+      <div class="vol-header">
+        <div class="vol-org">BlueBitsTeam</div>
+        <div class="vol-date">Nov 2020 — Nov 2022 • Aleppo</div>
+      </div>
+      <div class="vol-desc">Digitized university lectures by transforming professors' notes into structured digital materials, improving accessibility for students.</div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="section">
+    <div class="section-label">Skills</div>
+    <div class="skills-grid">
+      <span class="skill-chip">.NET Core</span>
+      <span class="skill-chip">Blazor (SSR/WASM)</span>
+      <span class="skill-chip">MudBlazor</span>
+      <span class="skill-chip">Clean Architecture</span>
+      <span class="skill-chip">Domain-Driven Design</span>
+      <span class="skill-chip">ASP.NET Core</span>
+      <span class="skill-chip">PostgreSQL</span>
+      <span class="skill-chip">Stripe API</span>
+      <span class="skill-chip">Google APIs</span>
+      <span class="skill-chip">Telegram Bots</span>
+      <span class="skill-chip">Linux</span>
+      <span class="skill-chip">Nginx</span>
+      <span class="skill-chip">Debugging</span>
+      <span class="skill-chip">Problem Solving</span>
+      <span class="skill-chip">Mentoring</span>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  // Scroll progress bar
+  const scrollLine = document.getElementById('scrollLine');
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    scrollLine.style.transform = `scaleX(${scrolled / total})`;
+  });
+
+  // Intersection observer for section animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.section').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 0.05}s`;
+    observer.observe(el);
+  });
+
+  // Staggered skill chip entrance
+  const chips = document.querySelectorAll('.skill-chip');
+  chips.forEach((chip, i) => {
+    chip.style.opacity = '0';
+    chip.style.transform = 'translateY(12px)';
+    chip.style.transition = `opacity 0.4s ease ${0.05 * i}s, transform 0.4s ease ${0.05 * i}s, background 0.25s, border-color 0.25s, color 0.25s`;
+  });
+
+  const skillSection = document.querySelector('.skills-grid');
+  const skillObserver = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      chips.forEach(chip => {
+        chip.style.opacity = '1';
+        chip.style.transform = 'translateY(0)';
+      });
+    }
+  }, { threshold: 0.2 });
+  skillObserver.observe(skillSection);
+</script>
+</body>
 </html>
