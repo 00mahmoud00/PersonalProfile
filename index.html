@@ -423,6 +423,132 @@
   .vol-date { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
   .vol-desc { font-size: 13.5px; color: #8a88a8; line-height: 1.7; }
 
+  /* ── Competitive Programming ── */
+  .cp-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  }
+  .cp-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(56,189,248,0.04) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .cp-card:hover { border-color: rgba(56,189,248,0.35); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(56,189,248,0.07); }
+  .cp-card:hover::before { opacity: 1; }
+
+  .cp-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .cp-stat-row {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .cp-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .cp-stat-value {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 28px;
+    line-height: 1;
+    background: linear-gradient(135deg, #fff 30%, var(--accent3));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .cp-stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .cp-topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .cp-topic {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 4px 12px;
+    border-radius: 100px;
+    background: rgba(56,189,248,0.08);
+    border: 1px solid rgba(56,189,248,0.18);
+    color: var(--accent3);
+  }
+
+  .cp-achievement {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: rgba(56,189,248,0.06);
+    border: 1px solid rgba(56,189,248,0.15);
+    border-radius: 10px;
+    font-size: 13px;
+    color: #9593b0;
+    line-height: 1.5;
+  }
+  .cp-achievement-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .cp-achievement a {
+    color: var(--accent3);
+    text-decoration: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: 6px;
+    transition: color 0.2s, gap 0.2s;
+  }
+  .cp-achievement a:hover { color: #fff; gap: 8px; }
+
+  .cp-profile-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent3);
+    text-decoration: none;
+    padding: 5px 14px;
+    border: 1px solid rgba(56,189,248,0.25);
+    border-radius: 100px;
+    background: rgba(56,189,248,0.07);
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .cp-profile-link:hover {
+    background: rgba(56,189,248,0.15);
+    border-color: rgba(56,189,248,0.4);
+    color: #fff;
+    gap: 10px;
+  }
+
   /* ── Divider ── */
   hr { border: none; border-top: 1px solid var(--border); margin: 8px 0 24px; }
 
@@ -443,6 +569,8 @@
     .projects-grid { grid-template-columns: 1fr; }
     .job-header { flex-direction: column; }
     .job-meta { align-items: flex-start; }
+    .cp-top { flex-direction: column; }
+    .cp-stat-value { font-size: 22px; }
   }
 </style>
 </head>
@@ -576,6 +704,53 @@
         </a>
       </div>
 
+    </div>
+  </section>
+
+  <!-- COMPETITIVE PROGRAMMING -->
+  <section class="section">
+    <div class="section-label">Competitive Programming</div>
+
+    <div class="cp-card">
+      <div class="cp-top">
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:17px;color:#fff;margin-bottom:4px;">Codeforces</div>
+          <div style="font-family:'DM Mono',monospace;font-size:12px;color:var(--accent3);">@00Mahmoud00</div>
+        </div>
+        <a class="cp-profile-link" href="https://codeforces.com/profile/00Mahmoud00" target="_blank">
+          View Profile
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+
+      <div class="cp-stat-row">
+        <div class="cp-stat">
+          <span class="cp-stat-value">500+</span>
+          <span class="cp-stat-label">Problems Solved</span>
+        </div>
+      </div>
+
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;">Problem Domains</div>
+      <div class="cp-topics">
+        <span class="cp-topic">Dynamic Programming</span>
+        <span class="cp-topic">Graph Theory</span>
+        <span class="cp-topic">Mathematics</span>
+        <span class="cp-topic">Data Structures</span>
+        <span class="cp-topic">Implementation</span>
+        <span class="cp-topic">Greedy</span>
+        <span class="cp-topic">Algorithms</span>
+      </div>
+
+      <div class="cp-achievement">
+        <span class="cp-achievement-icon">🏆</span>
+        <span>
+          Ranked <strong style="color:#c8c5e0">#11 at university level</strong> and qualified to the next round of the competitive programming contest.
+          <a href="#CERTIFICATE_URL_HERE" target="_blank">
+            View Certificate
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </span>
+      </div>
     </div>
   </section>
 
