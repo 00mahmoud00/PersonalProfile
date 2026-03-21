@@ -737,41 +737,52 @@
 </div>
 
 <script>
-  // Ensure the dialog is selected properly
-  const pdfDialog = document.getElementById('pdfDialog');
+  // Wrap everything in an event listener to ensure the DOM is ready
+  document.addEventListener('DOMContentLoaded', () => {
+    const pdfDialog = document.getElementById('pdfDialog');
+    const scrollLine = document.getElementById('scrollLine');
 
-  function openPdf(e) {
-    if(e) e.preventDefault();
-    if(pdfDialog) {
+    // 1. PDF Dialog Logic
+    // We attach these to the window object so the "onclick" in your HTML can find them
+    window.openPdf = (e) => {
+      if (e) e.preventDefault();
+      if (pdfDialog) {
         pdfDialog.showModal();
+      } else {
+        console.error("Could not find the pdfDialog element.");
+      }
+    };
+
+    window.closePdf = () => {
+      if (pdfDialog) pdfDialog.close();
+    };
+
+    if (pdfDialog) {
+      pdfDialog.addEventListener('click', (e) => {
+        if (e.target === pdfDialog) pdfDialog.close();
+      });
     }
-  }
 
-  function closePdf() {
-    if(pdfDialog) {
-        pdfDialog.close();
-    }
-  }
-
-  pdfDialog.addEventListener('click', (e) => {
-    if (e.target === pdfDialog) pdfDialog.close();
-  });
-
-  // Scroll and Animations
-  const scrollLine = document.getElementById('scrollLine');
-  window.addEventListener('scroll', () => {
-    const scrolled = window.scrollY;
-    const total = document.documentElement.scrollHeight - window.innerHeight;
-    scrollLine.style.transform = `scaleX(${scrolled / total})`;
-  });
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add('visible');
+    // 2. Scroll progress bar
+    window.addEventListener('scroll', () => {
+      if (scrollLine) {
+        const scrolled = window.scrollY;
+        const total = document.documentElement.scrollHeight - window.innerHeight;
+        scrollLine.style.transform = `scaleX(${scrolled / total})`;
+      }
     });
-  }, { threshold: 0.1 });
 
-  document.querySelectorAll('.section').forEach((el) => observer.observe(el));
+    // 3. Intersection observer for section animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.section').forEach((el) => observer.observe(el));
+  });
 </script>
 
 </body>
