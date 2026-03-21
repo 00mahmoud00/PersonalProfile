@@ -32,6 +32,7 @@
     overflow-x: hidden;
   }
 
+  /* ── Noise overlay ── */
   body::before {
     content: '';
     position: fixed;
@@ -42,6 +43,7 @@
     opacity: 0.4;
   }
 
+  /* ── Grid lines ── */
   .grid-bg {
     position: fixed;
     inset: 0;
@@ -54,6 +56,7 @@
     z-index: 0;
   }
 
+  /* ── Glow orbs ── */
   .orb {
     position: fixed;
     border-radius: 50%;
@@ -70,6 +73,7 @@
     100% { transform: translate(60px, 40px) scale(1.1); }
   }
 
+  /* ── Layout ── */
   .container {
     position: relative;
     z-index: 1;
@@ -78,6 +82,7 @@
     padding: 60px 32px 100px;
   }
 
+  /* ── Header ── */
   .header {
     display: grid;
     grid-template-columns: 1fr auto;
@@ -168,6 +173,7 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
+  /* ── Section ── */
   .section {
     margin-bottom: 52px;
     opacity: 0;
@@ -194,6 +200,7 @@
     background: linear-gradient(to right, var(--border), transparent);
   }
 
+  /* ── Job card ── */
   .job {
     position: relative;
     padding: 24px;
@@ -283,6 +290,7 @@
     font-weight: 500;
   }
 
+  /* ── Project cards ── */
   .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
@@ -350,6 +358,7 @@
   }
   .project-link:hover { gap: 10px; color: #fff; }
 
+  /* ── Skills ── */
   .skills-grid {
     display: flex;
     flex-wrap: wrap;
@@ -373,6 +382,7 @@
     transform: translateY(-2px);
   }
 
+  /* ── Education & Volunteering ── */
   .info-card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -391,6 +401,7 @@
   .info-sub { font-size: 13px; color: #7a78a0; }
   .info-meta { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-align: right; }
 
+  /* ── Volunteer ── */
   .vol-card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -412,6 +423,7 @@
   .vol-date { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
   .vol-desc { font-size: 13.5px; color: #8a88a8; line-height: 1.7; }
 
+  /* ── Competitive Programming ── */
   .cp-card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -421,7 +433,16 @@
     overflow: hidden;
     transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
   }
+  .cp-card::before {
+    content: '';
+    position: relative;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(56,189,248,0.04) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
   .cp-card:hover { border-color: rgba(56,189,248,0.35); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(56,189,248,0.07); }
+  .cp-card:hover::before { opacity: 1; }
 
   .cp-top {
     display: flex;
@@ -528,6 +549,10 @@
     gap: 10px;
   }
 
+  /* ── Divider ── */
+  hr { border: none; border-top: 1px solid var(--border); margin: 8px 0 24px; }
+
+  /* ── Scroll indicator ── */
   .scroll-line {
     position: fixed;
     top: 0; left: 0;
@@ -547,65 +572,6 @@
     .cp-top { flex-direction: column; }
     .cp-stat-value { font-size: 22px; }
   }
-
-  /* PDF Modal Styling */
-  .pdf-modal {
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    background: var(--surface);
-    color: var(--text);
-    padding: 0;
-    width: 90%;
-    max-width: 900px;
-    height: 80vh;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-    margin: auto;
-  }
-
-  .pdf-modal::backdrop {
-    background: rgba(10, 10, 15, 0.85);
-    backdrop-filter: blur(8px);
-  }
-
-  .modal-content {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-
-  .modal-header {
-    padding: 16px 24px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: var(--surface2);
-  }
-
-  .modal-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    color: var(--accent2);
-  }
-
-  .close-modal {
-    background: none;
-    border: none;
-    color: var(--muted);
-    font-size: 24px;
-    cursor: pointer;
-    transition: color 0.2s;
-  }
-
-  .close-modal:hover { color: var(--accent); }
-
-  .modal-body {
-    flex: 1;
-    background: #fff;
-    overflow: hidden;
-  }
-
-  .modal-body iframe { border: none; }
 </style>
 </head>
 <body>
@@ -617,8 +583,19 @@
 
 <div class="container">
 
+  <!-- HEADER -->
   <header class="header">
-    <img src="mahmoud.jpg" alt="Mahmoud Sharabati" style="width: 110px; height: 110px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(124,106,247,0.5); box-shadow: 0 0 30px rgba(124,106,247,0.2); justify-self: end; align-self: start;">
+  <img src="mahmoud.jpg" alt="Mahmoud Sharabati" style="
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(124,106,247,0.5);
+      box-shadow: 0 0 30px rgba(124,106,247,0.2);
+      justify-self: end;
+      align-self: start;
+    ">
+   
     <div>
       <div class="name">Mahmoud<br>Sharabati</div>
       <div class="title-badge">Mid-level .NET Core Developer</div>
@@ -639,12 +616,15 @@
     </div>
   </header>
 
+  <!-- SUMMARY -->
   <div class="summary-box">
     Strategic and detail-oriented .NET Developer with over <strong style="color:#c8c5e0">4 years of experience</strong> specializing in the .NET ecosystem. Expert in architecting scalable back-end systems using <strong style="color:#c8c5e0">Clean Architecture</strong> and <strong style="color:#c8c5e0">Domain-Driven Design (DDD)</strong>. Proficient in developing high-performance, interactive user interfaces using <strong style="color:#c8c5e0">Blazor (Server-Side & WebAssembly)</strong> and MudBlazor. Proven track record of streamlining project delivery through custom library development, seamless Third-party API integrations, and a commitment to high-quality, maintainable code.
   </div>
 
+  <!-- WORK EXPERIENCE -->
   <section class="section">
     <div class="section-label">Work Experience</div>
+
     <div class="job">
       <div class="job-header">
         <div>
@@ -657,10 +637,12 @@
         </div>
       </div>
       <ul>
-        <li><strong>Feature Development:</strong> Designed and implemented responsive administrative dashboards using Blazor and .NET Core.</li>
-        <li><strong>Production Support:</strong> Managed applications in live production, ensuring high uptime.</li>
+        <li><strong>Feature Development:</strong> Designed and implemented responsive administrative dashboards using Blazor and .NET Core, focusing on real-time data visualization and efficient management tools.</li>
+        <li><strong>Production Support:</strong> Managed the application in a live production environment, performing regular server health checks and technical troubleshooting to ensure 99.9% uptime.</li>
+        <li><strong>Technical Support & Optimization:</strong> Acted as the primary point of contact for technical issues, identifying root causes in production logs and deploying hotfixes to improve system stability.</li>
       </ul>
     </div>
+
     <div class="job">
       <div class="job-header">
         <div>
@@ -673,32 +655,106 @@
         </div>
       </div>
       <ul>
-        <li><strong>System Architecture:</strong> Architected solutions using .NET 6+ and Clean Architecture.</li>
-        <li><strong>API Integration:</strong> Integrated Stripe, Google APIs, and Telegram.</li>
+        <li><strong>System Architecture:</strong> Architected and deployed scalable back-end solutions using .NET Core/6+, translating complex business requirements into high-performance web applications.</li>
+        <li><strong>API Integration & Payment Systems:</strong> Streamlined business operations by integrating third-party services including Stripe, Google APIs, and Telegram for automated notification systems.</li>
+        <li><strong>Infrastructure & Tooling:</strong> Developed and maintained shared Internal Libraries, reducing boilerplate code across multiple projects and accelerating the development lifecycle.</li>
+        <li><strong>Code Quality & Optimization:</strong> Refactored legacy codebases to implement modern design patterns, resulting in measurable decreases in production bugs and faster project delivery.</li>
+        <li><strong>Mentorship & Leadership:</strong> Mentored engineering interns through code reviews and technical workshops to foster a high-performing development team.</li>
+        <li><strong>Technical Problem Solving:</strong> Engineered custom solutions for diverse business sectors, ensuring high availability and alignment with industry best practices.</li>
       </ul>
     </div>
   </section>
 
+  <!-- PROJECTS -->
+  <section class="section">
+    <div class="section-label">Projects</div>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-name">Clean Architecture Template</div>
+        <div class="project-desc">
+          A scalable and maintainable software project template built on Clean Architecture and Domain-Driven Design (DDD) principles. Implements clear separation of concerns across domain, application, infrastructure, and UI layers — ensuring high testability and adaptability.
+        </div>
+        <div class="project-tags">
+          <span class="tag">Clean Architecture</span>
+          <span class="tag">DDD</span>
+          <span class="tag">.NET Core</span>
+        </div>
+        <a class="project-link" href="https://gitlab.com/mahmoudsh792/template.git" target="_blank">
+          View Repository
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+
+      <div class="project-card">
+        <div class="project-name">Stockwise Dashboard</div>
+        <div class="project-desc">
+          A Warehouse Management System (WMS) dashboard for managing product categories, stock levels, and admin workflows. Built with a focus on performance and real-time data display.
+        </div>
+        <div class="project-tags">
+          <span class="tag">Blazor</span>
+          <span class="tag">ASP.NET Core</span>
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">Clean Architecture</span>
+          <span class="tag">DDD</span>
+        </div>
+        <a class="project-link" href="https://gitlab.com/mahmoudsh792/stockwise" target="_blank">
+          View Repository
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- COMPETITIVE PROGRAMMING -->
   <section class="section">
     <div class="section-label">Competitive Programming</div>
+
     <div class="cp-card">
       <div class="cp-top">
         <div>
-          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:17px;color:#fff;">Codeforces</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:17px;color:#fff;margin-bottom:4px;">Codeforces</div>
           <div style="font-family:'DM Mono',monospace;font-size:12px;color:var(--accent3);">@00Mahmoud00</div>
         </div>
-        <a class="cp-profile-link" href="https://codeforces.com/profile/00Mahmoud00" target="_blank">View Profile</a>
+        <a class="cp-profile-link" href="https://codeforces.com/profile/00Mahmoud00" target="_blank">
+          View Profile
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
       </div>
+
+      <div class="cp-stat-row">
+        <div class="cp-stat">
+          <span class="cp-stat-value">500+</span>
+          <span class="cp-stat-label">Problems Solved</span>
+        </div>
+      </div>
+
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;">Problem Domains</div>
+      <div class="cp-topics">
+        <span class="cp-topic">Dynamic Programming</span>
+        <span class="cp-topic">Graph Theory</span>
+        <span class="cp-topic">Mathematics</span>
+        <span class="cp-topic">Data Structures</span>
+        <span class="cp-topic">Implementation</span>
+        <span class="cp-topic">Greedy</span>
+        <span class="cp-topic">Algorithms</span>
+      </div>
+
       <div class="cp-achievement">
         <span class="cp-achievement-icon">🏆</span>
         <span>
-          Ranked #11 at university level.
-          <a href="#" onclick="openPdf(event)">View Certificate</a>
+          Ranked <strong style="color:#c8c5e0">#11 at university level</strong> and qualified to the next round of the competitive programming contest.
+          <a href="#CERTIFICATE_URL_HERE" target="_blank">
+            View Certificate
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
         </span>
       </div>
     </div>
   </section>
 
+  <!-- EDUCATION -->
   <section class="section">
     <div class="section-label">Education</div>
     <div class="info-card">
@@ -710,6 +766,28 @@
     </div>
   </section>
 
+  <!-- VOLUNTEERING -->
+  <section class="section">
+    <div class="section-label">Volunteering & Leadership</div>
+
+    <div class="vol-card">
+      <div class="vol-header">
+        <div class="vol-org">Sanad</div>
+        <div class="vol-date">Mar 2025 — May 2025 • Aleppo</div>
+      </div>
+      <div class="vol-desc">Delivered a hands-on training course on <strong style="color:#c8c5e0">.NET Core MVC</strong> at Al-Shahba Private University.</div>
+    </div>
+
+    <div class="vol-card">
+      <div class="vol-header">
+        <div class="vol-org">BlueBitsTeam</div>
+        <div class="vol-date">Nov 2020 — Nov 2022 • Aleppo</div>
+      </div>
+      <div class="vol-desc">Digitized university lectures by transforming professors' notes into structured digital materials, improving accessibility for students.</div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
   <section class="section">
     <div class="section-label">Skills</div>
     <div class="skills-grid">
@@ -717,76 +795,63 @@
       <span class="skill-chip">Blazor (SSR/WASM)</span>
       <span class="skill-chip">MudBlazor</span>
       <span class="skill-chip">Clean Architecture</span>
+      <span class="skill-chip">Domain-Driven Design</span>
+      <span class="skill-chip">ASP.NET Core</span>
       <span class="skill-chip">PostgreSQL</span>
+      <span class="skill-chip">Stripe API</span>
+      <span class="skill-chip">Google APIs</span>
+      <span class="skill-chip">Telegram Bots</span>
       <span class="skill-chip">Linux</span>
+      <span class="skill-chip">Nginx</span>
+      <span class="skill-chip">Debugging</span>
+      <span class="skill-chip">Problem Solving</span>
+      <span class="skill-chip">Mentoring</span>
     </div>
   </section>
-
-  <dialog id="pdfDialog" class="pdf-modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <span class="modal-title">Certificate Preview</span>
-        <button onclick="closePdf()" class="close-modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        <iframe src="Certificate.pdf" width="100%" height="100%"></iframe>
-      </div>
-    </div>
-  </dialog>
 
 </div>
 
 <script>
-  const getPdfDialog = () => document.getElementById('pdfDialog');
+  // Scroll progress bar
+  const scrollLine = document.getElementById('scrollLine');
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    scrollLine.style.transform = `scaleX(${scrolled / total})`;
+  });
 
-  // Keep functions available for inline onclick handlers and guard against missing dialog element.
-  window.openPdf = (e) => {
-    if (e) e.preventDefault();
-    const pdfDialog = getPdfDialog();
-    if (pdfDialog) {
-      pdfDialog.showModal();
-    } else {
-      console.error("Could not find the pdfDialog element.");
-    }
-  };
-
-  window.closePdf = () => {
-    const pdfDialog = getPdfDialog();
-    if (pdfDialog) pdfDialog.close();
-  };
-
-  // Wrap everything else in an event listener to ensure the DOM is ready
-  document.addEventListener('DOMContentLoaded', () => {
-    const scrollLine = document.getElementById('scrollLine');
-    const pdfDialog = getPdfDialog();
-
-    if (pdfDialog) {
-      pdfDialog.addEventListener('click', (e) => {
-        if (e.target === pdfDialog) pdfDialog.close();
-      });
-    }
-
-    // 2. Scroll progress bar
-    window.addEventListener('scroll', () => {
-      if (scrollLine) {
-        const scrolled = window.scrollY;
-        const total = document.documentElement.scrollHeight - window.innerHeight;
-        scrollLine.style.transform = `scaleX(${scrolled / total})`;
+  // Intersection observer for section animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
       }
     });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-    // 3. Intersection observer for section animations
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.section').forEach((el) => observer.observe(el));
+  document.querySelectorAll('.section').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 0.05}s`;
+    observer.observe(el);
   });
-</script>
 
+  // Staggered skill chip entrance
+  const chips = document.querySelectorAll('.skill-chip');
+  chips.forEach((chip, i) => {
+    chip.style.opacity = '0';
+    chip.style.transform = 'translateY(12px)';
+    chip.style.transition = `opacity 0.4s ease ${0.05 * i}s, transform 0.4s ease ${0.05 * i}s, background 0.25s, border-color 0.25s, color 0.25s`;
+  });
+
+  const skillSection = document.querySelector('.skills-grid');
+  const skillObserver = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      chips.forEach(chip => {
+        chip.style.opacity = '1';
+        chip.style.transform = 'translateY(0)';
+      });
+    }
+  }, { threshold: 0.2 });
+  skillObserver.observe(skillSection);
+</script>
 </body>
 </html>
