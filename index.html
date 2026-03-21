@@ -791,7 +791,7 @@
         <span class="cp-achievement-icon">🏆</span>
         <span>
           Ranked <strong style="color:#c8c5e0">#11 at university level</strong> and qualified to the next round of the competitive programming contest.
-          <a href="Certificate.pdf" onclick="openCertificate(event)">
+          <a href="Certificate.pdf" onclick="openCertificate(event)" aria-haspopup="dialog">
             View Certificate
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </a>
@@ -860,9 +860,9 @@
 <dialog id="pdfDialog" class="pdf-dialog">
   <div class="pdf-dialog-header">
     <span>Certificate Viewer</span>
-    <button type="button" class="pdf-dialog-close" onclick="closeCertificate()">Close</button>
+    <button type="button" class="pdf-dialog-close" onclick="closeCertificate()" aria-label="Close certificate viewer">Close</button>
   </div>
-  <iframe class="pdf-frame" src="Certificate.pdf" title="Certificate PDF"></iframe>
+  <iframe id="certificateFrame" class="pdf-frame" src="" data-src="Certificate.pdf" title="University Programming Contest Certificate"></iframe>
 </dialog>
 
 <script>
@@ -910,7 +910,14 @@
   function openCertificate(event) {
     event.preventDefault();
     const dialog = document.getElementById('pdfDialog');
+    const frame = document.getElementById('certificateFrame');
     if (!dialog) return;
+    if (frame) {
+      const certificateSrc = frame.getAttribute('data-src');
+      if (!frame.getAttribute('src') && certificateSrc) {
+        frame.setAttribute('src', certificateSrc);
+      }
+    }
     dialog.showModal();
   }
 
@@ -919,6 +926,7 @@
     if (!dialog) return;
     dialog.close();
   }
+
 </script>
 </body>
 </html>
