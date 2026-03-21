@@ -527,6 +527,52 @@
   }
   .cp-achievement a:hover { color: #fff; gap: 8px; }
 
+  .pdf-dialog {
+    width: min(960px, 92vw);
+    height: min(88vh, 900px);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--surface);
+    padding: 0;
+    overflow: hidden;
+  }
+  .pdf-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(3px);
+  }
+  .pdf-dialog-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface2);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .pdf-dialog-close {
+    border: 1px solid rgba(56,189,248,0.25);
+    border-radius: 8px;
+    background: rgba(56,189,248,0.08);
+    color: var(--accent3);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    cursor: pointer;
+  }
+  .pdf-dialog-close:hover { color: #fff; border-color: rgba(56,189,248,0.45); }
+  .pdf-frame {
+    width: 100%;
+    height: calc(100% - 48px);
+    border: 0;
+  }
+
   .cp-profile-link {
     display: inline-flex;
     align-items: center;
@@ -745,7 +791,7 @@
         <span class="cp-achievement-icon">🏆</span>
         <span>
           Ranked <strong style="color:#c8c5e0">#11 at university level</strong> and qualified to the next round of the competitive programming contest.
-          <a href="#CERTIFICATE_URL_HERE" target="_blank">
+          <a href="Certificate.pdf" onclick="openCertificate(event)">
             View Certificate
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </a>
@@ -811,6 +857,14 @@
 
 </div>
 
+<dialog id="pdfDialog" class="pdf-dialog">
+  <div class="pdf-dialog-header">
+    <span>Certificate Viewer</span>
+    <button type="button" class="pdf-dialog-close" onclick="closeCertificate()">Close</button>
+  </div>
+  <iframe class="pdf-frame" src="Certificate.pdf" title="Certificate PDF"></iframe>
+</dialog>
+
 <script>
   // Scroll progress bar
   const scrollLine = document.getElementById('scrollLine');
@@ -852,6 +906,19 @@
     }
   }, { threshold: 0.2 });
   skillObserver.observe(skillSection);
+
+  function openCertificate(event) {
+    event.preventDefault();
+    const dialog = document.getElementById('pdfDialog');
+    if (!dialog) return;
+    dialog.showModal();
+  }
+
+  function closeCertificate() {
+    const dialog = document.getElementById('pdfDialog');
+    if (!dialog) return;
+    dialog.close();
+  }
 </script>
 </body>
 </html>
