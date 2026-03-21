@@ -737,25 +737,28 @@
 </div>
 
 <script>
-  // Wrap everything in an event listener to ensure the DOM is ready
+  const getPdfDialog = () => document.getElementById('pdfDialog');
+
+  // Keep functions available for inline onclick handlers and guard against missing dialog element.
+  window.openPdf = (e) => {
+    if (e) e.preventDefault();
+    const pdfDialog = getPdfDialog();
+    if (pdfDialog) {
+      pdfDialog.showModal();
+    } else {
+      console.error("Could not find the pdfDialog element.");
+    }
+  };
+
+  window.closePdf = () => {
+    const pdfDialog = getPdfDialog();
+    if (pdfDialog) pdfDialog.close();
+  };
+
+  // Wrap everything else in an event listener to ensure the DOM is ready
   document.addEventListener('DOMContentLoaded', () => {
-    const pdfDialog = document.getElementById('pdfDialog');
     const scrollLine = document.getElementById('scrollLine');
-
-    // 1. PDF Dialog Logic
-    // We attach these to the window object so the "onclick" in your HTML can find them
-    window.openPdf = (e) => {
-      if (e) e.preventDefault();
-      if (pdfDialog) {
-        pdfDialog.showModal();
-      } else {
-        console.error("Could not find the pdfDialog element.");
-      }
-    };
-
-    window.closePdf = () => {
-      if (pdfDialog) pdfDialog.close();
-    };
+    const pdfDialog = getPdfDialog();
 
     if (pdfDialog) {
       pdfDialog.addEventListener('click', (e) => {
